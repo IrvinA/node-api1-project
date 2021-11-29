@@ -15,11 +15,20 @@ server.post('/api/users', async (req, res) => {
       res.status(201).json(user);
     }
   } catch (error) {
+    res.status(500).json({
+      message: 'There was an error while saving the user to the database',
+    });
+  }
+});
+
+server.get('/api/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
     res
       .status(500)
-      .json({
-        message: 'There was an error while saving the user to the database',
-      });
+      .json({ message: 'The users information could not be retrieved' });
   }
 });
 
